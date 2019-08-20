@@ -3,37 +3,37 @@ declare(strict_types=1);
 
 namespace Tests\Infrastructure\Persistence\User;
 
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
-use App\Infrastructure\Persistence\User\InMemoryUserRepository;
+use App\Domain\Pet\Pet;
+use App\Domain\Pet\PetNotFoundException;
+use App\Infrastructure\Persistence\User\InMemoryPetRepository;
 use Tests\TestCase;
 
 class InMemoryUserRepositoryTest extends TestCase
 {
     public function testFindAll()
     {
-        $user = new User(1, 'bill.gates', 'Bill', 'Gates');
+        $user = new Pet(1, 'bill.gates', 'Bill', 'Gates');
 
-        $userRepository = new InMemoryUserRepository([1 => $user]);
+        $userRepository = new InMemoryPetRepository([1 => $user]);
 
         $this->assertEquals([$user], $userRepository->findAll());
     }
 
     public function testFindUserOfId()
     {
-        $user = new User(1, 'bill.gates', 'Bill', 'Gates');
+        $user = new Pet(1, 'bill.gates', 'Bill', 'Gates');
 
-        $userRepository = new InMemoryUserRepository([1 => $user]);
+        $userRepository = new InMemoryPetRepository([1 => $user]);
 
-        $this->assertEquals($user, $userRepository->findUserOfId(1));
+        $this->assertEquals($user, $userRepository->findPetOfId(1));
     }
 
     /**
-     * @expectedException \App\Domain\User\UserNotFoundException
+     * @expectedException \App\Domain\Pet\PetNotFoundException
      */
     public function testFindUserOfIdThrowsNotFoundException()
     {
-        $userRepository = new InMemoryUserRepository([]);
-        $userRepository->findUserOfId(1);
+        $userRepository = new InMemoryPetRepository([]);
+        $userRepository->findPetOfId(1);
     }
 }

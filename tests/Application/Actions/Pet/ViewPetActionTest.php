@@ -1,19 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Application\Actions\User;
+namespace Tests\Application\Actions\Pet;
 
 use App\Application\Actions\ActionError;
 use App\Application\Actions\ActionPayload;
 use App\Application\Handlers\HttpErrorHandler;
-use App\Domain\User\User;
-use App\Domain\User\UserNotFoundException;
-use App\Domain\User\UserRepository;
+use App\Domain\Pet\Pet;
+use App\Domain\Pet\PetNotFoundException;
+use App\Domain\Pet\PetRepository;
 use DI\Container;
 use Slim\Middleware\ErrorMiddleware;
 use Tests\TestCase;
 
-class ViewUserActionTest extends TestCase
+class ViewPetActionTest extends TestCase
 {
     public function testAction()
     {
@@ -22,21 +22,21 @@ class ViewUserActionTest extends TestCase
         /** @var Container $container */
         $container = $app->getContainer();
 
-        $user = new User(1, 'bill.gates', 'Bill', 'Gates');
+        $pet = new Pet(1, 'bill.gates', 'Bill', 'Gates');
 
-        $userRepositoryProphecy = $this->prophesize(UserRepository::class);
-        $userRepositoryProphecy
-            ->findUserOfId(1)
-            ->willReturn($user)
+        $petRepositoryProphecy = $this->prophesize(PetRepository::class);
+        $petRepositoryProphecy
+            ->findPetOfId(1)
+            ->willReturn($pet)
             ->shouldBeCalledOnce();
 
-        $container->set(UserRepository::class, $userRepositoryProphecy->reveal());
+        $container->set(PetRepository::class, $petRepositoryProphecy->reveal());
 
-        $request = $this->createRequest('GET', '/users/1');
+        $request = $this->createRequest('GET', '/pet/1');
         $response = $app->handle($request);
 
         $payload = (string) $response->getBody();
-        $expectedPayload = new ActionPayload(200, $user);
+        $expectedPayload = new ActionPayload(200, $pet);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 
         $this->assertEquals($serializedPayload, $payload);
@@ -58,15 +58,15 @@ class ViewUserActionTest extends TestCase
         /** @var Container $container */
         $container = $app->getContainer();
 
-        $userRepositoryProphecy = $this->prophesize(UserRepository::class);
+        $userRepositoryProphecy = $this->prophesize(PetRepository::class);
         $userRepositoryProphecy
-            ->findUserOfId(1)
-            ->willThrow(new UserNotFoundException())
+            ->findPetOfId(1)
+            ->willThrow(new PetNotFoundException())
             ->shouldBeCalledOnce();
 
-        $container->set(UserRepository::class, $userRepositoryProphecy->reveal());
+        $container->set(PetRepository::class, $userRepositoryProphecy->reveal());
 
-        $request = $this->createRequest('GET', '/users/1');
+        $request = $this->createRequest('GET', '/pet/1');
         $response = $app->handle($request);
 
         $payload = (string) $response->getBody();

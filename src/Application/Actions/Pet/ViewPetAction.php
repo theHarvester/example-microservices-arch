@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Application\Actions\User;
+namespace App\Application\Actions\Pet;
 
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ViewUserAction extends UserAction
+class ViewPetAction extends PetAction
 {
     /**
      * {@inheritdoc}
@@ -13,9 +13,9 @@ class ViewUserAction extends UserAction
     protected function action(): Response
     {
         $userId = (int) $this->resolveArg('id');
-        $user = $this->userRepository->findUserOfId($userId);
+        $user = $this->petRepository->findPetOfId($userId);
 
-        $this->logger->info("User of id `${userId}` was viewed.");
+        $this->logger->info("Pet of id `${userId}` was viewed.");
 
         return $this->respondWithData($user);
     }

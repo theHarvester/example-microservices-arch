@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Domain\User;
+namespace App\Domain\Pet;
 
 use JsonSerializable;
 
-class User implements JsonSerializable
+class Pet implements JsonSerializable
 {
     /**
      * @var int|null
@@ -13,9 +13,14 @@ class User implements JsonSerializable
     private $id;
 
     /**
+     * @var int
+     */
+    private $categoryId;
+
+    /**
      * @var string
      */
-    private $username;
+    private $name;
 
     /**
      * @var string
@@ -36,7 +41,7 @@ class User implements JsonSerializable
     public function __construct(?int $id, string $username, string $firstName, string $lastName)
     {
         $this->id = $id;
-        $this->username = $username;
+        $this->name = $username;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
     }
@@ -44,7 +49,7 @@ class User implements JsonSerializable
     /**
      * @return int|null
      */
-    public function getId(): ?int
+    public function getCategoryId(): ?int
     {
         return $this->id;
     }
@@ -52,9 +57,9 @@ class User implements JsonSerializable
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getName(): string
     {
-        return strtolower($this->username);
+        return strtolower($this->name);
     }
 
     /**
@@ -80,7 +85,7 @@ class User implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'username' => $this->username,
+            'username' => $this->name,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
         ];

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\User;
 
-use App\Domain\User\User;
+use App\Domain\Pet\Pet;
 use Tests\TestCase;
 
 class UserTest extends TestCase
@@ -28,10 +28,10 @@ class UserTest extends TestCase
      */
     public function testGetters($id, $username, $firstName, $lastName)
     {
-        $user = new User($id, $username, $firstName, $lastName);
+        $user = new Pet($id, $username, $firstName, $lastName);
 
-        $this->assertEquals($id, $user->getId());
-        $this->assertEquals($username, $user->getUsername());
+        $this->assertEquals($id, $user->getCategoryId());
+        $this->assertEquals($username, $user->getName());
         $this->assertEquals($firstName, $user->getFirstName());
         $this->assertEquals($lastName, $user->getLastName());
     }
@@ -45,7 +45,7 @@ class UserTest extends TestCase
      */
     public function testJsonSerialize($id, $username, $firstName, $lastName)
     {
-        $user = new User($id, $username, $firstName, $lastName);
+        $user = new Pet($id, $username, $firstName, $lastName);
 
         $expectedPayload = json_encode([
             'id' => $id,
