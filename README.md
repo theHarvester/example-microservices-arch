@@ -51,6 +51,7 @@ I've kept the database interaction logic very simple. There's plenty of packages
 You can use `docker-compose` to run the app:
 ```bash
 cp .env.example .env
+composer install
 docker-compose up -d
 ```
 After that, open `http://0.0.0.0:8080` in your browser or with Postman.
