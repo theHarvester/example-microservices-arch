@@ -10,7 +10,7 @@ services:
             context: ./
             dockerfile: slim.dockerfile
         working_dir: /var/www
-        command: bash -c "php wait-for-db.php && vendor/bin/phinx migrate -e development && php -S 0.0.0.0:8080 -t public"
+        command: bash -c "php wait-for-db.php && vendor/bin/phinx migrate -e development && php vendor/bin/phinx seed:run && php -S 0.0.0.0:8080 -t public"
         environment:
             docker: "true"
         ports:

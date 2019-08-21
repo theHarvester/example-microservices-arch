@@ -7,6 +7,9 @@ use JsonSerializable;
 
 class Pet implements JsonSerializable
 {
+    const CATEGORY_CAT = 0;
+    const CATEGORY_DOG = 1;
+
     /**
      * @var int|null
      */
