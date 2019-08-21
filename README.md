@@ -54,5 +54,3 @@ cp .env.example .env
 docker-compose up -d
 ```
 After that, open `http://0.0.0.0:8080` in your browser or with Postman.
-
-`TODO Add Postman collection of working routes`
