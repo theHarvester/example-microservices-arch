@@ -19,7 +19,14 @@ return function (App $app) {
 
     $app->group('/pet', function (Group $group) use ($container) {
         $group->get('', ListPetsAction::class);
+        $group->get('/findByStatus', ListPetsAction::class);
         $group->get('/{id}', ViewPetAction::class);
+
+        // Unfinished Routes
         $group->post('/', CreatePetAction::class);
+        $group->put('/', CreatePetAction::class);
+        $group->post('/{id}', CreatePetAction::class);
+        $group->delete('/{id}', CreatePetAction::class);
+        $group->post('/{id}/uploadImage', CreatePetAction::class);
     });
 };

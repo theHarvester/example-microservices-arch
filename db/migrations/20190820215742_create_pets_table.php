@@ -33,10 +33,9 @@ class CreatePetsTable extends AbstractMigration
     {
         $this->table('pets')
             ->addColumn('name', 'string', ['limit' => 255])
-            ->addColumn('status', 'integer', ['signed' => false])
+            ->addColumn('category', 'integer', ['signed' => false])
+            ->addColumn('status', 'string', ['limit' => 255])
             ->addColumn('photo_urls', 'json')
-            ->addColumn('created', 'datetime')
-            ->addColumn('updated', 'datetime', ['null' => true])
             ->addIndex(['name'])
             ->addIndex(['status'])
             ->create();

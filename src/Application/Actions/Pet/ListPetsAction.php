@@ -12,10 +12,17 @@ class ListPetsAction extends PetAction
      */
     protected function action(): Response
     {
-        $users = $this->petRepository->findAll();
+        $params = $this->request->getQueryParams();
 
-        $this->logger->info("Users list was viewed.");
+        $statusFilter = null;
+        if (isset($params['status']) && is_string($params['status'])) {
+            $statusFilter = $params['status'];
+        }
 
-        return $this->respondWithData($users);
+        $pets = $this->petRepository->findAll($statusFilter);
+
+        $this->logger->info("Pets list was viewed.");
+
+        return $this->respondWithData($pets);
     }
 }

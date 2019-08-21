@@ -6,6 +6,7 @@ namespace Tests\Application\Actions\Pet;
 use App\Application\Actions\ActionPayload;
 use App\Domain\Pet\PetRepository;
 use App\Domain\Pet\Pet;
+use App\Domain\Pet\Tag;
 use DI\Container;
 use Tests\TestCase;
 
@@ -18,7 +19,7 @@ class ListPetActionTest extends TestCase
         /** @var Container $container */
         $container = $app->getContainer();
 
-        $pet = new Pet(1, 'bill.gates', 'Bill', 'Gates');
+        $pet = new Pet(1, 'Doggo', 'available', Pet::CATEGORY_DOG, ['/path'], [new Tag(1, 'lovable')]);
 
         $petRepositoryProphecy = $this->prophesize(PetRepository::class);
         $petRepositoryProphecy

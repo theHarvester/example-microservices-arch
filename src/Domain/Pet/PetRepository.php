@@ -6,9 +6,10 @@ namespace App\Domain\Pet;
 interface PetRepository
 {
     /**
+     * @param string|null $statusFilter
      * @return Pet[]
      */
-    public function findAll(): array;
+    public function findAll($statusFilter = null): array;
 
     /**
      * @param int $id

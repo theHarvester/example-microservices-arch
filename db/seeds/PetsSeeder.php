@@ -22,17 +22,15 @@ class PetsSeeder extends AbstractSeed
             [
                 'id' => $mittensId,
                 'name' => 'Mittens',
-                'status' => \App\Domain\Pet\Pet::CATEGORY_CAT,
+                'category' => \App\Domain\Pet\Pet::CATEGORY_CAT,
+                'status' => 'available',
                 'photo_urls' => '["/url/to/photo"]',
-                'created' => date('Y-m-d H:i:s'),
-                'updated' => date('Y-m-d H:i:s'),
             ], [
                 'id' => $scruffyId,
                 'name' => 'Scruffy',
-                'status' => \App\Domain\Pet\Pet::CATEGORY_DOG,
+                'category' => \App\Domain\Pet\Pet::CATEGORY_DOG,
+                'status' => 'available',
                 'photo_urls' => '["/url/to/photo"]',
-                'created' => date('Y-m-d H:i:s'),
-                'updated' => date('Y-m-d H:i:s'),
             ]
         ];
 
@@ -54,8 +52,6 @@ class PetsSeeder extends AbstractSeed
         $posts = $this->table('tags');
         $posts->insert($data)->save();
 
-        $playfulId = rand(1, 1000);
-        $meanId = rand(1, 1000);
         $data = [
             [
                 'pet_id' => $scruffyId,

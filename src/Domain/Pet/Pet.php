@@ -16,43 +16,52 @@ class Pet implements JsonSerializable
     private $id;
 
     /**
-     * @var int
-     */
-    private $categoryId;
-
-    /**
      * @var string
      */
     private $name;
 
     /**
-     * @var string
+     * @var int
      */
-    private $firstName;
+    private $category;
+
+    /**
+     * @var string[]
+     */
+    private $photoUrls;
 
     /**
      * @var string
      */
-    private $lastName;
+    private $status;
 
     /**
-     * @param int|null  $id
-     * @param string    $username
-     * @param string    $firstName
-     * @param string    $lastName
+     * @var Tag[]
      */
-    public function __construct(?int $id, string $username, string $firstName, string $lastName)
+    private $tags;
+
+    /**
+     * @param int|null $id
+     * @param string $name
+     * @param string $status
+     * @param int $category
+     * @param array $photoUrls
+     * @param Tag[] $tags
+     */
+    public function __construct(?int $id, string $name, string $status, int $category, array $photoUrls, array $tags)
     {
         $this->id = $id;
-        $this->name = $username;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
+        $this->name = $name;
+        $this->status = $status;
+        $this->category = $category;
+        $this->photoUrls = $photoUrls;
+        $this->tags = $tags;
     }
 
     /**
      * @return int|null
      */
-    public function getCategoryId(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -62,23 +71,56 @@ class Pet implements JsonSerializable
      */
     public function getName(): string
     {
-        return strtolower($this->name);
+        return $this->name;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategory(): int
+    {
+        return $this->category;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getPhotoUrls(): array
+    {
+        return $this->photoUrls;
     }
 
     /**
      * @return string
      */
-    public function getFirstName(): string
+    public function getStatus(): string
     {
-        return ucfirst($this->firstName);
+        return $this->status;
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getLastName(): string
+    public function getTags(): array
     {
-        return ucfirst($this->lastName);
+        return $this->tags;
+    }
+
+    public function mergeTag(Tag $tag)
+    {
+        return $this->tags[] = $tag;
+    }
+
+    public function getCategoryLabel($categoryType)
+    {
+        switch ($categoryType) {
+            case self::CATEGORY_CAT:
+                return 'cat';
+            case self::CATEGORY_DOG:
+                return 'dog';
+            default:
+                return '';
+        }
     }
 
     /**
@@ -88,9 +130,16 @@ class Pet implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'username' => $this->name,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
+            'category' => [
+                'id' => $this->category,
+                'name' => $this->getCategoryLabel($this->category)
+            ],
+            'name' => $this->name,
+            'photoUrls' => $this->photoUrls,
+            'tags' => array_map(function(Tag $tag) {
+                return $tag->jsonSerialize();
+            }, $this->tags),
+            'status' => $this->status,
         ];
     }
 }
