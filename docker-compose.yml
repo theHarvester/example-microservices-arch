@@ -6,9 +6,11 @@ volumes:
 
 services:
     slim:
-        image: php:7-alpine
+        build:
+            context: ./
+            dockerfile: slim.dockerfile
         working_dir: /var/www
-        command: php -S 0.0.0.0:8080 -t public
+        command: bash -c "php wait-for-db.php && vendor/bin/phinx migrate -e development && php -S 0.0.0.0:8080 -t public"
         environment:
             docker: "true"
         ports:
@@ -16,3 +18,13 @@ services:
         volumes:
             - .:/var/www
             - logs:/var/www/logs
+    database:
+        image: mysql:5.7
+        ports:
+            - "33061:3306"
+        environment:
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_DATABASE: pets
+            MYSQL_USER: example
+            MYSQL_PASSWORD: secret

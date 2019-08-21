@@ -38,6 +38,7 @@ I'm just going to keep the validation and database interaction logic very light.
 
 You can use `docker-compose` to run the app:
 ```bash
+cp .env.example .env
 docker-compose up -d
 ```
 After that, open `http://0.0.0.0:8080` in your browser or with Postman.
